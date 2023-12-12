@@ -109,8 +109,12 @@ int exponent(int n, int a){
     int result = 1;
     if (a == 0) return result;
     /*@
+       loop invariant 0 <= i <= a + 1;
+       loop invariant result == exp(n, i - 1);
+       loop assigns i, result;
+       loop variant a  + 1 - i;
     */
-    for (int i = 0; i < a; i++) result *= n;
+    for (int i = 1; i <= a; i++) result *= n;
     return result;
 }
 
