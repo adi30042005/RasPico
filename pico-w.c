@@ -74,7 +74,7 @@ int main()
 
 
 /*** FIBONACCI SRIVATSAN ***/
-int fibonacci(int n){
+int fibonacci(int n){ // can also write a function that outputs an array
     // code
 }
 
@@ -86,6 +86,32 @@ int factorial(int n){
 /*** SATHWIK THE DIVIDER ***/
 float divide(float a, float b){ // a / b = q * b + r. give me q and r ie. the quotient and remainder.
     // code
+}
+
+/*@
+   axiomatic Exponent{
+    logic integer exp(integer x, integer m);
+
+    axiom case_m:
+        \forall integer x, m;
+        m >= 1 ==> exp(x, m) == x * exp(x, m - 1);
+    axiom case_0:
+        exp(x, 0) == 1;
+   }
+*/
+
+/*@
+   ensures \result == exp(n, a);
+   requires INT_MIN < n < INT_MAX;
+   requires 0 <= a < INT_MAX;
+*/
+int exponent(int n, int a){
+    int result = 1;
+    if (a == 0) return result;
+    /*@
+    */
+    for (int i = 0; i < a; i++) result *= n;
+    return result;
 }
 
 int main() {
