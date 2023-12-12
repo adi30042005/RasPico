@@ -71,7 +71,8 @@ int main()
 
 #include <stdio.h>
 #include <limits.h>
-#include "pico/stdlib.h"
+#include <stdbool.h>
+// #include "~/Documents/collegeStuff/sem3/pr/frama-c/project/pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h"
 
 
 /*** DRINKWATER SRIVATSAN ***/
@@ -94,8 +95,8 @@ void sensor_process(int* rawInput, int* processed){ // LDR reading, analog read,
 }
 
 /*@
-    requires \valid_read(*sensor_reading);
-    requires \valid(*device_state);
+    requires \valid_read(sensor_reading);
+    requires \valid(device_state);
     requires 0 <= *sensor_reading < 256;
     assigns *device_state;
     behavior dark_room:
@@ -122,22 +123,32 @@ void light_control(int *sensor_reading, bool *device_state) {
    requires \valid_read(upButton);
    requires \valid_read(downButton);
    requires \valid(activateServo);
-   ensures *activateServo \in({10, -10, 0});
+   ensures *activateServo \in({1, -1, 0});
    behavior up:
-    assumes *upButton == \true;
+    assumes *upButton == \true && *downButton == \false;
     ensures *activateServo == 1;
    behavior down:
-    assumes *downButton == \true;
+    assumes *downButton == \true && *upButton == \false;
+    ensures *activateServo == -1;
+   behavior nothing:
+    assumes *downButton == \false && *upButton == \false;
+    ensures *activateServo == 0; 
+   behavior everything:
+    assumes *downButton == \true && *upButton == \true;
+    ensures *activateServo == 0;  
+   complete behaviors;
+   disjoint behaviors; 
 */
 
-// also add case for both buttons pressing
+// we have a automatic height adjustable standing table
 
-// we have a moveable standing table
-
-void moveTable(bool* upButton, bool* downButton, int* activateServo){ // 1 is move up, -1 id move down, 0 is idle
+void moveTable(bool* upButton, bool* downButton, int* activateServo){ // 1 is move up, -1 is move down, 0 is idle
+    if (!(*upButton && *downButton)){ // when you press one button only
     if (*upButton) *activateServo = 1;
     else if (*downButton) *activateServo = -1;
     else *activateServo = 0; 
+    }
+    else *activateServo = 0;
 }
 
 // /*@
