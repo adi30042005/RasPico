@@ -70,58 +70,77 @@ int main()
 // copied part of this from hello_usb.c from pico-examples
 
 #include <stdio.h>
+#include <limits.h>
 #include "pico/stdlib.h"
 
 
-/*** FIBONACCI SRIVATSAN ***/
-int fibonacci(int n){ // can also write a function that outputs an array
-    // code
+/*** DRINKWATER SRIVATSAN ***/
+// initialize the time at the beginning.
+
+bool drinkWater(){
+    // check current time - init time 
+    // if it is greater than some small value 
+    // then printf DRINKWATER
 }
 
-/*** FACTORIAL JAIADITYA ***/
-int factorial(int n){
-    // code
-}
+/*** HEATER JAIADITYA ***/
 
-/*** SATHWIK THE DIVIDER ***/
-float divide(float a, float b){ // a / b = q * b + r. give me q and r ie. the quotient and remainder.
-    // code
-}
+
+/*** SATHWIK LIGHT ***/
+
+
+/*** MOVE TABLE ***/
 
 /*@
-   axiomatic Exponent{
-    logic integer exp(integer x, integer m);
 
-    axiom case_m:
-        \forall integer x, m;
-        m >= 1 ==> exp(x, m) == x * exp(x, m - 1);
-    axiom case_0:
-        exp(x, 0) == 1;
-   }
 */
-
-/*@
-   ensures \result == exp(n, a);
-   requires INT_MIN < n < INT_MAX;
-   requires 0 <= a < INT_MAX;
-*/
-int exponent(int n, int a){
-    int result = 1;
-    if (a == 0) return result;
-    /*@
-       loop invariant 0 <= i <= a + 1;
-       loop invariant result == exp(n, i - 1);
-       loop assigns i, result;
-       loop variant a  + 1 - i;
-    */
-    for (int i = 1; i <= a; i++) result *= n;
-    return result;
+void moveTable(bool* upButton, bool* downButton, int* activateServo){ // 10 id move up, -10 id move down, 0 is idle
+    if (*upButton) *activateServo = 10;
+    else if (*downButton) *activateServo = -10;
+    else *activateServo = 0; 
 }
+
+// /*@
+//    axiomatic Exponent{
+//     logic integer exp(integer n, integer a);
+
+//     axiom case_m:
+//         \forall integer n;
+//         \forall integer a;
+//         a >= 1 ==> exp(n, a) == n * exp(n, a - 1);
+//     axiom case_0:
+//         \forall integer n;
+//         exp(n, 0) == 1;
+//    }
+// */
+
+// /*@
+//    requires INT_MIN < n < INT_MAX;
+//    requires 0 <= a < INT_MAX;
+//    assigns \nothing;
+//    ensures \result == exp(n, a);
+// */
+// int exponent(int n, int a){
+//     int result = 1;
+//     if (a == 0) return result;
+
+//     // loop invariant result == exp(n, i - 1);
+//     // check this again
+//     /*@
+//        loop invariant 0 <= i <= a + 1;
+       
+//        loop assigns i, result;
+//        loop variant a + 1 - i;
+//     */
+//     for (int i = 1; i <= a; i++) result *= n;
+//     return result;
+// }
 
 int main() {
     stdio_init_all();
     while (true) { // sample code
-        printf("Hello, world!\n");
+        drinkWater();
+        // all those funcs
         sleep_ms(1000);
     }
 }
