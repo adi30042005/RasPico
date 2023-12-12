@@ -73,19 +73,24 @@ int main()
 #include "pico/stdlib.h"
 
 
-// verification
+/*** FIBONACCI SRIVATSAN ***/
 int fibonacci(int n){
     // code
 }
 
-// verification
+/*** FACTORIAL JAIADITYA ***/
 int factorial(int n){
+    // code
+}
+
+/*** SATHWIK THE DIVIDER ***/
+float divide(float a, float b){ // a / b = q * b + r. give me q and r ie. the quotient and remainder.
     // code
 }
 
 int main() {
     stdio_init_all();
-    while (true) {
+    while (true) { // sample code
         printf("Hello, world!\n");
         sleep_ms(1000);
     }
