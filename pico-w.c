@@ -88,6 +88,33 @@ bool drinkWater(){
 
 /*** SATHWIK LIGHT ***/
 
+void sensor_process(int* rawInput, int* processed){ // LDR reading, analog read, example range is 0 to 255, depends on device
+    if (*rawInput > 128) *processed = 1;
+    else processed = 0; // this shall be sensor_reading
+}
+
+/*@
+    requires \valid_read(*sensor_reading);
+    requires \valid(*device_state);
+    requires 0 <= *sensor_reading < 256;
+    assigns *device_state;
+    behavior dark_room:
+        assumes *sensor_reading <= 128;
+        ensures *device_state == \true;
+    behavior lit_roon:
+        assumes *sensor_reading > 128;
+        ensures *device_state == \false;
+    complete behaviors;
+    disjoint behaviors;
+*/
+void light_control(int *sensor_reading, bool *device_state) {
+    if (*sensor_reading <= 128) {
+        *device_state = true; 
+    } else {
+        *device_state = false; 
+    }
+}
+
 
 /*** MOVE TABLE ***/
 
