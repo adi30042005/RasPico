@@ -92,11 +92,24 @@ bool drinkWater(){
 /*** MOVE TABLE ***/
 
 /*@
-
+   requires \valid_read(upButton);
+   requires \valid_read(downButton);
+   requires \valid(activateServo);
+   ensures *activateServo \in({10, -10, 0});
+   behavior up:
+    assumes *upButton == \true;
+    ensures *activateServo == 1;
+   behavior down:
+    assumes *downButton == \true;
 */
-void moveTable(bool* upButton, bool* downButton, int* activateServo){ // 10 id move up, -10 id move down, 0 is idle
-    if (*upButton) *activateServo = 10;
-    else if (*downButton) *activateServo = -10;
+
+// also add case for both buttons pressing
+
+// we have a moveable standing table
+
+void moveTable(bool* upButton, bool* downButton, int* activateServo){ // 1 is move up, -1 id move down, 0 is idle
+    if (*upButton) *activateServo = 1;
+    else if (*downButton) *activateServo = -1;
     else *activateServo = 0; 
 }
 
