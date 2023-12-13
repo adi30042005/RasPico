@@ -85,6 +85,37 @@ bool drinkWater(){
 }
 
 /*** HEATER JAIADITYA ***/
+/*@ requires \valid_read(tempReading);
+    requires \valid(heaterState);
+    assigns *heaterState;
+    ensures *heaterState == 0 || *heaterState == 1;
+    
+    behavior below_20:
+        assumes *tempReading < 20;
+        assigns *heaterState;
+        ensures *heaterState == 1;
+    
+    behavior above_25:
+        assumes *tempReading > 25;
+        assigns *heaterState;
+        ensures *heaterState == 0;
+    
+    behavior between_20_and_25:
+        assumes 20 <= *tempReading <= 25;
+        assigns \nothing;
+        ensures \old(*heaterState) == *heaterState;
+    
+    complete behaviors below_20, above_25, between_20_and_25;
+    disjoint behaviors below_20, above_25, between_20_and_25;
+*/
+void control_heater(const int* tempReading, int* heaterState) {
+    if (*tempReading < 20) {
+        *heaterState = 1;
+    } else if (*tempReading > 25) {
+        *heaterState = 0;
+    }
+    // If temp is between 20°C and 25°C, heater state remains unchanged
+}
 
 
 /*** SATHWIK LIGHT ***/
