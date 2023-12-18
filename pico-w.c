@@ -88,7 +88,6 @@ bool drinkWater(){
 /*@ requires \valid_read(tempReading);
     requires \valid(heaterState);
     assigns *heaterState;
-    ensures *heaterState == 0 || *heaterState == 1;
     
     behavior below_20:
         assumes *tempReading < 20;
@@ -102,7 +101,6 @@ bool drinkWater(){
     
     behavior between_20_and_25:
         assumes 20 <= *tempReading <= 25;
-        assigns \nothing;
         ensures \old(*heaterState) == *heaterState;
     
     complete behaviors below_20, above_25, between_20_and_25;
@@ -119,11 +117,6 @@ void control_heater(const int* tempReading, int* heaterState) {
 
 
 /*** SATHWIK LIGHT ***/
-
-void sensor_process(int* rawInput, int* processed){ // LDR reading, analog read, example range is 0 to 255, depends on device
-    if (*rawInput > 128) *processed = 1;
-    else processed = 0; // this shall be sensor_reading
-}
 
 /*@
     requires \valid_read(sensor_reading);
@@ -154,6 +147,7 @@ void light_control(int *sensor_reading, bool *device_state) {
    requires \valid_read(upButton);
    requires \valid_read(downButton);
    requires \valid(activateServo);
+   assigns *activateServo;
    ensures *activateServo \in({1, -1, 0});
    behavior up:
     assumes *upButton == \true && *downButton == \false;
@@ -199,7 +193,6 @@ void moveTable(bool* upButton, bool* downButton, int* activateServo){ // 1 is mo
 // /*@
 //    requires INT_MIN < n < INT_MAX;
 //    requires 0 <= a < INT_MAX;
-//    assigns \nothing;
 //    ensures \result == exp(n, a);
 // */
 // int exponent(int n, int a){
