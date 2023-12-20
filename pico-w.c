@@ -19,8 +19,20 @@
 
 /*** DRINKWATER SRIVATSAN ***/
 
-void drinkWater(){
-    return;
+/*@
+ requires \valid(ledStatus);
+ requires (interval >= 0) && (interval <= INT_MAX);
+ assigns *ledStatus;
+ behavior on:
+    assumes 0 <= interval%1800 < 10;
+    ensures *ledStatus == \true;
+*/
+void drinkWaterPrompt(int interval, bool *ledStatus)
+{
+  if (0 <= interval%1800 < 10)
+  {
+    *ledStatus = true;
+  }
 }
 
 /*** HEATER JAIADITYA ***/
